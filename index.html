@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"> 
+
+
+    <div id = "title">My Project</div>
+    <div id = "container">Introductions about this project</div>
+    <div id = "bookmarks">Enable Blocklist Mode?</div>
+    <!-- <button class = "Add_Bookmark_Button" onclick = "AddBookmark">Add</button> -->
+    
+    
+    <input type="checkbox" id="blocklist">
+    
+  
+    <form id="addBlocklistForm">
+        <label for="addBlocklists">Add blocklist:</label>
+        <input type="text" id="addBlocklistInput" name="addBlocklist" placeholder="Add..." />
+        <button type="submit">Submit</button>
+      </form>
+  
+      <form id="deleteBlocklistForm">
+        <label for="deleteBlocklists">Delete blocklists:</label>
+        <input type="text" id="deleteBlocklistInput" name="deleteBlocklist" placeholder="Delete..."/>
+        <button type="submit">Submit</button>
+      </form>
+
+        <button id="openSettings">Settings</button>
+        <button id="listTabs">List Active Tabs</button>
+
+      <script src = "background.js"> </script>
+      //<link href="styles.css" rel="stylesheet" type="text/css" />
+</html>
