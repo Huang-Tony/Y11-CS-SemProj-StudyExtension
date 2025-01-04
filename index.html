@@ -1,31 +1,49 @@
 <!DOCTYPE html>
 <html lang="en"> 
 
+<div id = "mainControl">
+  <div id = "title">ProcrastiNOT
 
-    <div id = "title">ProcrastiNOT</div>
-    <div id = "container">Lock in bruh</div>
-    <div id = "bookmarks">Enable Blocklist Mode?</div>
-    <!-- <button class = "Add_Bookmark_Button" onclick = "AddBookmark">Add</button> -->
-    
-    
-    <input type="checkbox" id="blocklist">
-    
-  
-    <form id="addBlocklistForm">
-        <label for="addBlocklists">Add blocklist:</label>
-        <input type="text" id="addBlocklistInput" name="addBlocklist" placeholder="Add..." />
-        <button type="submit">Submit</button>
-      </form>
-  
-      <form id="deleteBlocklistForm">
-        <label for="deleteBlocklists">Delete blocklists:</label>
-        <input type="text" id="deleteBlocklistInput" name="deleteBlocklist" placeholder="Delete..."/>
-        <button type="submit">Submit</button>
-      </form>
+    <label class="switch">
+      <input type="checkbox">
+      <span class="slider round"></span>
+    </label>
 
+  </div>
+</div>
+
+
+<body>
+    
+    <div id = "container">
+      <div id = "currentWebsitePlaceholder1">You are currently on:</div>
+        <div id = "currentWebsitePlaceholder2">insert website</div>
+      </div>
+    </div>  
+<!--  -->
+    <label for="ChangeLists">Enter URL:</label>
+<!--  -->
+    <form id="manipulateLists">
+        <input type="text" id="manipulateListsInput" placeholder="e.g. www.starwars.com" />
+        <button type="submit" id = "addToAllowlist">Allow this site</button>
+        <button type="submit" id = "addToBlocklist">Block this site</button>
+      </form>
+      <div id="currentActiveSites">
+        <div id="currentActiveBlocklist">insert Active Blocked sites</div>
+        <div id="currentActiveAllowlist">insert Active Allowed sites</div>
+      </div>
+      
+<!--  -->
+      <div id = "settingsAndTabs">
         <button id="openSettings">Settings</button>
-        <button id="listTabs">List Active Tabs</button>
+        <button id="feedback">Report a bug</button>
+      </div>
+    </body>
 
+    <head>
       <script src = "background.js"> </script>
-      //<link href="styles.css" rel="stylesheet" type="text/css" />
+      <link href="styles.css" rel="stylesheet" type="text/css" />
+    </head>
+
+
 </html>

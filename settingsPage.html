@@ -1,6 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
-    <div class = "title">SETTINGS</div>
-    <div class = "container">See settings here:</div>
-    <div class = "bookmarks">Insert Settings</div>
+<html lang="en"> 
+
+<head>
+  <script src = "background.js"> </script>
+  <link href="styles.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+    <div id = "title">SETTINGS!</div>
+    <div id = "container">
+      <div id = "currentWebsite">
+        <div id = "currentWebsitePlaceholder1">You're currently on:</div>
+        <div id = "currentWebsitePlaceholder2">insert current website</div>
+      </div>
+    </div>
+    <!-- <button class = "Add_Bookmark_Button" onclick = "AddBookmark">Add</button> -->
+  
+  
+  
+    <form id="addBlocklistForm">
+        <label for="addBlocklists">Add blocklist:</label>
+        <input type="text" id="addBlocklistInput" name="addBlocklist" placeholder="Add..." />
+        <button type="submit">Submit</button>
+      </form>
+  
+      <form id="deleteBlocklistForm">
+        <label for="deleteBlocklists">Delete blocklists:</label>
+        <input type="text" id="deleteBlocklistInput" name="deleteBlocklist" placeholder="Delete..."/>
+        <button type="submit">Submit</button>
+      </form>
+
+      <div id = "settingsAndTabs">
+        <button id="openSettings">Settings</button>
+        <button id="listTabs">List Active Tabs</button>
+      </div>
+    
+    </body>
 </html>

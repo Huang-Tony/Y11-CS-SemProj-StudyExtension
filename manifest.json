@@ -1,6 +1,6 @@
 {
     
-    "name": "Study Blocker",
+    "name": "ProcrastiNOT",
 
     "description": "A simple tool to stop procrastination",
     "version": "1.0",
@@ -19,7 +19,7 @@
       ],
 
    "background":{
-  "scripts": ["background.js"]
+  "scripts": ["background.js", "settingsPage.js"]
 }
   }
   
