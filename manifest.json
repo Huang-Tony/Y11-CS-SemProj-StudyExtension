@@ -7,20 +7,24 @@
     "manifest_version": 3,
     
     "action": {
-      "default_popup": "index.html",
+      "default_popup": "popup.html",
       "default_icon": "Extension.png"
     },
     
     "permissions": [
         "activeTab",
-        "contextMenus",
         "storage",
         "tabs"
       ],
 
+  "host_permissions": [
+    "<all_urls>"
+  ],
    "background":{
-  "scripts": ["background.js", "settingsPage.js"]
+    "service_worker": "background.js"
 }
+
+  
   }
   
   

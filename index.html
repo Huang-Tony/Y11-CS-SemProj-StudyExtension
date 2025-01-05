@@ -27,10 +27,12 @@
         <input type="text" id="manipulateListsInput" placeholder="e.g. www.starwars.com" />
         <button type="submit" id = "addToAllowlist">Allow this site</button>
         <button type="submit" id = "addToBlocklist">Block this site</button>
+        <button type="sumbit" id = "removeFromAllowlist">Remove from Allowlist</button>
+        <button type="sumbit" id = "removeFromBlocklist">Remove from Blocklist</button>
       </form>
       <div id="currentActiveSites">
-        <div id="currentActiveBlocklist">insert Active Blocked sites</div>
-        <div id="currentActiveAllowlist">insert Active Allowed sites</div>
+        <div id="currentActiveBlocklist">Blocked sites:</div>
+        <div id="currentActiveAllowlist">Allowed sites:</div>
       </div>
       
 <!--  -->
@@ -41,7 +43,7 @@
     </body>
 
     <head>
-      <script src = "background.js"> </script>
+      <script src = "popup.js"> </script>
       <link href="styles.css" rel="stylesheet" type="text/css" />
     </head>
 

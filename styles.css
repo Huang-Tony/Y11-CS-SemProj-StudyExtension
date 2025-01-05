@@ -1,136 +1,283 @@
-/* 
-background color: #a8dadc 
-title color: #1d3557
-interation box color: #f1faee
-current website color: #457b9d
-block/delete list box color: #1f7a8c
-submit butons: #219ebc
-button hover: #45a049
-greeen: #2dc653
-red: #EF233C
-*/
+/* styles.css */
 
-
-body {
-  font-family:  Helvetica, sans-serif;
-  color:#ffffff;
+/* General Reset */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styles */
+body{
+  font-family: 'Roboto', sans-serif; /* Modern, clean font */
+  background-color: #f5f7fa; /* Light, neutral background */
+  color: #333333; /* Dark text for good contrast */
+  line-height: 1.6;
   padding: 20px;
-  background-color: #a8dadc;
+  font-size: 16px;
+
+    /* width: 1500px; */
+
+
+      width: 400px; /* Fixed width for the extension */
+      height: 600px; /* Fixed height for the extension */
+      overflow-y: auto; /* Enable scrolling for content overflow */
+
+
+}
+
+/* Main Control */
+#mainControl {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: #ffffff; /* White background for contrast */
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 #title {
-  font-family: 'Times New Roman', Times, serif;
-  color: #1d3557;
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 10px;  /* the margin at the bottom */
-  padding: 20px;
-  text-align: center;
+  color: #007acc; /* Blue accent for the title */
 }
 
-#container {
-  background-color: #f1faee;
-  font-weight: bold;
-  font-size: 15px;
-  color: #002a8a;
-  padding: 20px;
-  border-radius: 4px;
-  /* box-shadow: 0 2px 4px rgba(36, 21, 110, 0.1); */
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider{
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #cccccc;
+  transition: 0.4s;
+  border-radius: 20px;
+}
+
+.slider:before{
+  position: absolute;
+  content: '';
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #007acc; /* Blue for active toggle */
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* Container for Current Website */
+#container{
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#currentWebsitePlaceholder1 {
+  font-size: 18px;
+  color: #555555; /* Gray for less emphasis */
+  margin-bottom: 10px;
+}
+
+#currentWebsitePlaceholder2,
+#currentWebsitePlaceholder3 {
+  font-size: 16px;
+  color: #333333; /* Darker text */
+  word-wrap: normal;
+}
+
+/* Form Styles */
+form#manipulateLists {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   margin-bottom: 20px;
 }
 
-#currentWebsitePlaceholder1{
-
-  color: #777777;
-  font-size:12px;
-  font-style:oblique;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
+#manipulateListsInput {
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  color: #333333;
+  font-size: 14px;
 }
 
-#currentWebsitePlaceholder2{
-  color:#37617b;
-  padding-bottom:10px;
-}
-
-
-#manipulateListsInput{
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  width: 95%;
-
-}
-
-#addToAllowlist{
-  margin-top: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-radius: 4px; /* rounding corners */
-  background-color: #039772;
-  float: left;
-  width: 49%;
+form button {
+  padding: 10px;
   border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-#addToLists:hover {
-  background-color: #007f5f;
+#addToAllowlist {
+  background-color: #007acc;
+  color: #ffffff;
+}
+
+#addToAllowlist:hover {
+  background-color: #005f99;
+  transform: scale(1.03);
 }
 
 #addToBlocklist{
-  margin-top: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-radius: 4px; /* rounding corners */
-  background-color: #EF233C;
-  float: right;
-  width: 49%;
-  border: none;
+  background-color: #ff6f61;
+  color: #ffffff;
 }
 
-#deleteToLists:hover {
-  background-color: #d62222;
+#addToBlocklist:hover {
+  background-color: #e5564d;
+  transform: scale(1.03);
 }
 
-#currentActiveSites{
-  color:#37617b;
-  padding-bottom:10px;
-  text-align: center;
-}
-
-#settingsAndTabs{
-  margin-top: 40px;
-  padding: 30px;
-   text-align: center; /* center divs */
-}
-
-input[type="text"] {
-  width: 200px;
-  border: 1px solid #1f7a8c;
-  border-radius: 4px;
-
-}
-
-/* button {
-  padding: 8px 16px;
-  background-color: #219ebc;
+#removeFromAllowlist {
+  margin-top: 15px;
+  background-color: #6a0035;
   color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-} */
-
-button:hover {
-  background-color: #45a049;
+}
+#removeFromBlocklist{
+  background-color: #6a0035;
+  color: white;
 }
 
-#openSettings {
+#removeFromBlocklist:hover,
+#removeFromAllowlist:hover{
+  background-color: #500128;
+  transform: scale(1.03);
+}
+
+
+/* Active Sites List */
+#currentActiveSites{
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+#currentActiveBlocklist,
+#currentActiveAllowlist {
   margin-top: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #333333;
+  word-wrap: break-word;
+  border: 1px solid #cccccc;
+
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  /* text-overflow: ellipsis; Add ellipses (...) for long URLs */
+
+  max-height: 150px; /* Limit the height of the list */
+  overflow-y: auto; /* Add vertical scrolling for long lists */
+
+  padding: 5px;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  font-size: 14px;
+  color: #007acc; /* Blue color for URLs */
+  cursor: pointer;
+
 }
 
-@media (max-width: 350px) {
-  body {
-    padding: 150px;  /* this allows the chrome extension to expand, not only occupying a small columm of the display */
-  }
+#currentActiveBlocklist div::after,
+#currentActiveAllowlist div::after {
+  content: attr(title); /* Use the full URL as a tooltip */
+  position: absolute;
+  background: #333333;
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  display: none;
+  white-space: nowrap;
+  z-index: 10;
+  
 }
+
+#currentActiveBlocklist div:hover::after,
+#currentActiveAllowlist div:hover::after {
+  display: block; /* Show the tooltip on hover */
+}
+
+
+
+
+/* Settings and Tabs */
+#settingsAndTabs {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+#settingsAndTabs button{
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#settingsAndTabs button:hover {
+  background-color: #388e3c;
+  transform: scale(1.03);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #cccccc;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #aaaaaa;
+}
+
+/* Add a subtle shadow for depth */
+#container,
+#mainControl,
+#currentActiveSites{
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
