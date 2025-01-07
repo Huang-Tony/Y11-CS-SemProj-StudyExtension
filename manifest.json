@@ -7,10 +7,9 @@
     "manifest_version": 3,
     
     "action": {
-      "default_popup": "popup.html",
+      "default_popup": "index.html",
       "default_icon": "Extension.png"
     },
-    
     "permissions": [
         "activeTab",
         "storage",
@@ -18,7 +17,10 @@
       ],
 
   "host_permissions": [
-    "<all_urls>"
+    "<all_urls>",
+    "*://*.starwars.com/*",
+    "http://*/*",
+    "https://*/*"
   ],
    "background":{
     "service_worker": "background.js"

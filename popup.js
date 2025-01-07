@@ -40,7 +40,7 @@ chrome.storage.local.get(["allowlist", "blocklist"], (data) => {
 
 
 
-openSettings.addEventListener('click',launchSettings)
+openSettings.addEventListener('click',launchSettings);
 
 // Load stored preferences on page load
 let activeTabId;
@@ -64,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
       //currentUrl.includes(blockedUrl) checks if the currentUrl contains the blockedUrl as a substring.
       //If currentUrl contains blockedUrl, the function returns true and redirects:
       chrome.tabs.update(tabs[0].id, { url: "goBackToWork.html" });
+      console.log("redirected from popup.js!");
     }
   });
 });
@@ -125,13 +126,13 @@ function launchSettings(event){
 
 function addAllowlistFunc(event) {
   event.preventDefault();
-  chrome.storage.local.set({ allowlist });
-  addToList(manipulateListsInput.value.trim(), allowlist, "allowlist", currentActiveAllowlist);
+  // chrome.storage.local.set({ allowlist });
+  addToList(manipulateListsInput.value.trim(), allowlist, currentActiveAllowlist);
 }
 
 function addBlocklistFunc(event) {
   event.preventDefault();
-  addToList(manipulateListsInput.value.trim(), blocklist, "blocklist", currentActiveBlocklist);
+  addToList(manipulateListsInput.value.trim(), blocklist, currentActiveBlocklist);
 }
 
 
@@ -147,13 +148,17 @@ openSettings.addEventListener("click", (event) => {
 
 
 // Helper functions that simplifies the task so that I don't have to repeat the same code from my previous commit
-function addToList(url, list, storeKey, listDisplay) {
+function addToList(url, list, listDisplay) {
   if (url) {
     if (list.includes(url)) {
       alert(url + ` is already in the list!`);
     } else {
       list.push(url);
-      localStorage.setItem(storeKey, JSON.stringify(list));
+      if(list == allowlist){
+        chrome.storage.local.set({allowlist});
+      }else{
+        chrome.storage.local.set({blocklist});
+      }
       renderList(listDisplay, list);
       manipulateListsInput.value = "";  // clears value of the input box
     }
