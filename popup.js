@@ -3,7 +3,10 @@ const addToAllowlist = document.getElementById('addToAllowlist');
 const addToBlocklist = document.getElementById('addToBlocklist');
 // basically storing these html elements into constants so they can be 
 // manipulated more easily later such as adding event listeners and references etc
-
+const removeFromAllowlist = document.getElementById('removeFromAllowlist');
+const removeFromBlocklist = document.getElementById('removeFromBlocklist');
+removeFromAllowlist.addEventListener('click',removeFromAllowlistFunc);
+removeFromBlocklist.addEventListener('click',removeFromBlocklistFunc);
 
 addToAllowlist.addEventListener('click',addAllowlistFunc);
 addToBlocklist.addEventListener('click',addBlocklistFunc);
@@ -27,9 +30,11 @@ function renderList(listDisplay, list) {
 
 
 // Array to store the blocklists
-chrome.storage.local.get(["allowlist", "blocklist"], (data) => {
+chrome.storage.local.get(["allowlist", "blocklist"], (data) => {  // gets the allowlist and blocklist using their storagekey ids of "allowlist" and "blocklist".
   allowlist = data.allowlist || [];
   blocklist = data.blocklist || [];
+  // either retrieve the allowlist files or create a new allowlist file if it's empty
+
   renderList(document.getElementById("currentActiveAllowlist"), allowlist);
   renderList(document.getElementById("currentActiveBlocklist"), blocklist);
 });
@@ -101,10 +106,10 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 // });
 
 // Utility function to store lists in localStorage
-function saveLists() {
-  localStorage.setItem("allowlist", JSON.stringify(allowlist));
-  localStorage.setItem("blocklist", JSON.stringify(blocklist));
-}
+// function saveLists() {
+//   localStorage.setItem("allowlist", JSON.stringify(allowlist));
+//   localStorage.setItem("blocklist", JSON.stringify(blocklist));
+// }
 
 
 // Function to check if a URL should be blocked
@@ -135,6 +140,18 @@ function addBlocklistFunc(event) {
   addToList(manipulateListsInput.value.trim(), blocklist, currentActiveBlocklist);
 }
 
+function removeFromAllowlistFunc(event) {
+  event.preventDefault();
+  // chrome.storage.local.set({ allowlist });
+  removeFromAllowlistFF(manipulateListsInput.value.trim(), allowlist, currentActiveAllowlist);
+}
+
+function removeFromBlocklistFunc(event){
+  event.preventDefault();
+  // chrome.storage.local.set({ allowlist });
+  removeFromBlocklistFF(manipulateListsInput.value.trim(), blocklist, currentActiveBlocklist);
+}
+
 
 // Event listeeners
 
@@ -151,7 +168,7 @@ openSettings.addEventListener("click", (event) => {
 function addToList(url, list, listDisplay) {
   if (url) {
     if (list.includes(url)) {
-      alert(url + ` is already in the list!`);
+      alert(url.hostname + ` is already in the list!`);
     } else {
       list.push(url);
       if(list == allowlist){
@@ -165,11 +182,30 @@ function addToList(url, list, listDisplay) {
   }
 }
 
-function removeFromList(url, list, storeKey) {
+
+function removeFromAllowlistFF(url, list, listDisplay) {
   const index = list.indexOf(url);
+  console.log("ee");
+  console.log(index);
+  console.log()
   if (index !== -1) {
     list.splice(index, 1);  // removes the item starting from index 1, removes 1 item
-    localStorage.setItem(storeKey, JSON.stringify(list));   // stores the modified array using its key after removal
+    chrome.storage.local.set({allowlist});   // stores the modified array using its key after removal
+    console.log(list);
+    renderList(listDisplay, list);
+  }
+}
+
+function removeFromBlocklistFF(url, list, listDisplay) {
+  const index = list.indexOf(url);
+  console.log("ee");
+  console.log(index);
+  console.log()
+  if (index !== -1) {
+    list.splice(index, 1);  // removes the item starting from index 1, removes 1 item
+    chrome.storage.local.set({blocklist});   // stores the modified array using its key after removal
+    console.log(list);
+    renderList(listDisplay, list);
   }
 }
 
