@@ -1,6 +1,10 @@
 //logic for allowing and blocking tabs
 const addToAllowlist = document.getElementById('addToAllowlist');
 const addToBlocklist = document.getElementById('addToBlocklist');
+
+var switchToggle = document.getElementById('switch');
+switchToggle.addEventListener("click", blocklistOn);
+
 // basically storing these html elements into constants so they can be 
 // manipulated more easily later such as adding event listeners and references etc
 const removeFromAllowlist = document.getElementById('removeFromAllowlist');
@@ -11,11 +15,21 @@ removeFromBlocklist.addEventListener('click',removeFromBlocklistFunc);
 addToAllowlist.addEventListener('click',addAllowlistFunc);
 addToBlocklist.addEventListener('click',addBlocklistFunc);
 
+
 const manipulateListsInput = document.getElementById('manipulateListsInput');
 const currentWebsitePlaceholder2 = document.getElementById('currentWebsitePlaceholder2');
 const currentActiveAllowlist = document.getElementById('currentActiveAllowlist');
 const currentActiveBlocklist = document.getElementById('currentActiveBlocklist');
 const openSettings = document.getElementById('openSettings');
+const getFeedback = document.getElementById('feedback');
+
+getFeedback.addEventListener("click", (event) => {
+  chrome.tabs.create({ url: "socials.html" });
+  console.log("Launched socials page!");
+});
+
+
+
 
 function renderList(listDisplay, list) {
   listDisplay.innerHTML = ""; // Clear the container
@@ -26,18 +40,40 @@ function renderList(listDisplay, list) {
     listDisplay.appendChild(urlDiv);
   });
 }
-
-
+let loaded = false;
+let activeList = "";
 
 // Array to store the blocklists
-chrome.storage.local.get(["allowlist", "blocklist"], (data) => {  // gets the allowlist and blocklist using their storagekey ids of "allowlist" and "blocklist".
+chrome.storage.local.get(["allowlist", "blocklist", "activeList"], (data) => {  // gets the allowlist and blocklist using their storagekey ids of "allowlist" and "blocklist".
   allowlist = data.allowlist || [];
   blocklist = data.blocklist || [];
+  activeList = data.activeList || "blocklist";
+  switchToggle.checked = activeList === "allowlist";
+
+  console.log("Loaded data:");
+  console.log("Allowlist:", allowlist);
+  console.log("Blocklist:", blocklist);
+  console.log("Active List:", activeList);
+
+  // Add event listener after initial state is set
+
   // either retrieve the allowlist files or create a new allowlist file if it's empty
 
   renderList(document.getElementById("currentActiveAllowlist"), allowlist);
   renderList(document.getElementById("currentActiveBlocklist"), blocklist);
+
 });
+
+function blocklistOn(){
+  if(switchToggle.checked == true){
+    activeList = "allowlist";
+  }else{
+    activeList = "blocklist";
+  }
+  chrome.storage.local.set({ activeList }, () => {
+    console.log("Active list set to:" + activeList);
+  });
+}
 
 
 //when the page is loaded, retrieve allowlist and blocklist using the keys "allowlist" and "blocklist respectively". 
@@ -59,39 +95,39 @@ document.addEventListener("DOMContentLoaded", () => {
   renderList(currentActiveBlocklist, blocklist);
 
   // Detect the current website and check if it's blocked
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {  // inspired by https://developer.chrome.com/docs/extensions/reference/api/tabs
-    activeTabId = tabs[0].id;
-    const currentUrl = new URL(tabs[0].url).hostname; // retrieves the url with only the host name: e.g. www.starwars.com 
-    currentWebsitePlaceholder2.textContent = currentUrl;
+  // chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {  // inspired by https://developer.chrome.com/docs/extensions/reference/api/tabs
+  //   activeTabId = tabs[0].id;
+  //   const currentUrl = new URL(tabs[0].url).hostname; // retrieves the url with only the host name: e.g. www.starwars.com 
+  //   currentWebsitePlaceholder2.textContent = currentUrl;
 
-    if (blocklist.some((blockedUrl) => currentUrl.includes(blockedUrl))) {
-      // some iterates through every single url in the blocklsit
-      //currentUrl.includes(blockedUrl) checks if the currentUrl contains the blockedUrl as a substring.
-      //If currentUrl contains blockedUrl, the function returns true and redirects:
-      chrome.tabs.update(tabs[0].id, { url: "goBackToWork.html" });
-      console.log("redirected from popup.js!");
-    }
-  });
+  //   if (blocklist.some((blockedUrl) => currentUrl.includes(blockedUrl))) {
+  //     // some iterates through every single url in the blocklsit
+  //     //currentUrl.includes(blockedUrl) checks if the currentUrl contains the blockedUrl as a substring.
+  //     //If currentUrl contains blockedUrl, the function returns true and redirects:
+  //     chrome.tabs.update(tabs[0].id, { url: "goBackToWork.html" });
+  //     console.log("redirected from popup.js!");
+  //   }
+  // });
 });
 
 
 
-chrome.tabs.onCreated.addListener(function(tab) {         
-  if (shouldBlock(tab.url)) {
-    // Redirect to the "getToWork.html" page
-    chrome.tabs.update(tabId, { url: "getToWork.html" });
-}
-});
+// chrome.tabs.onCreated.addListener(function(tab) {         
+//   if (shouldBlock(tab.url)) {
+//     // Redirect to the "getToWork.html" page
+//     chrome.tabs.update(tabId, { url: "getToWork.html" });
+// }
+// });
 
 // Event listener for tab updates (URL changes, navigation, etc.)
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  // Ensure we only act when the tab's URL has been fully loaded
+// chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+//   // Ensure we only act when the tab's URL has been fully loaded
   
-    if (shouldBlock(tab.url)) {
-      // Redirect to the "getToWork.html" page
-      chrome.tabs.update(tabId, { url: "getToWork.html" });
-  }
-});
+//     if (shouldBlock(tab.url)) {
+//       // Redirect to the "getToWork.html" page
+//       chrome.tabs.update(tabId, { url: "getToWork.html" });
+//   }
+// });
 
 // // Listener for storage changes to keep allowlist and blocklist updated
 // chrome.storage.onChanged.addListener((changes, namespace) => {
@@ -113,10 +149,10 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
 
 // Function to check if a URL should be blocked
-function shouldBlock(url) {
-  const currentUrl = new URL(url).hostname;
-  return blocklist.some((blockedUrl) => currentUrl.includes(blockedUrl)); // iterates through all blocked urls. If the current url contains the blocked url, return true
-}
+// function shouldBlock(url) {
+//   const currentUrl = new URL(url).hostname;
+//   return blocklist.some((blockedUrl) => currentUrl.includes(blockedUrl)); // iterates through all blocked urls. If the current url contains the blocked url, return true
+// }
 
 // Event listener for tab updates (URL changes, navigation, etc.)
 
@@ -168,7 +204,7 @@ openSettings.addEventListener("click", (event) => {
 function addToList(url, list, listDisplay) {
   if (url) {
     if (list.includes(url)) {
-      alert(url.hostname + ` is already in the list!`);
+      alert(url + ` is already in the list!`);
     } else {
       list.push(url);
       if(list == allowlist){

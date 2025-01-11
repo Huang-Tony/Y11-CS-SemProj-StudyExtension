@@ -4,13 +4,22 @@
 <div id = "mainControl">
   <div id = "title">ProcrastiNOT
 
-    <label class="switch">
-      <input type="checkbox">
-      <span class="slider round"></span>
-    </label>
+    <!-- /* From Uiverse.io by Bodyhc */  -->
+<div class="checkbox-wrapper-35">
+  <input value="private" name="switch" id="switch" type="checkbox" class="switch">
+  <label for="switch">
+    <span class="switch-x-text">Mode:</span>
+    <span class="switch-x-toggletext">
+      <span class="switch-x-unchecked"><span class="switch-x-hiddenlabel">Unchecked: </span>Blocklist</span>
+      <span class="switch-x-checked"><span class="switch-x-hiddenlabel">Checked: </span>Allowlist</span>
+    </span>
+  </label>
+</div>
+<!-- end of ref -->
 
   </div>
 </div>
+
 
 
 <body>
@@ -31,14 +40,17 @@
         <button type="sumbit" id = "removeFromBlocklist">Remove from Blocklist</button>
       </form>
       <div id="currentActiveSites">
-        <div id="currentActiveBlocklist">Blocked sites:</div>
+        <div id = "allowedSiteText">Allowed Sites:</div>
         <div id="currentActiveAllowlist">Allowed sites:</div>
+        <div id = "blockedSiteText">Blocked Sites:</div>
+        <div id="currentActiveBlocklist">Blocked sites:</div>
+
       </div>
       
 <!--  -->
       <div id = "settingsAndTabs">
         <button id="openSettings">Settings</button>
-        <button id="feedback">Report a bug</button>
+        <button id="feedback">Contact</button>
       </div>
     </body>
 
